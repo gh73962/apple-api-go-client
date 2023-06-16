@@ -7,6 +7,7 @@ import (
 
 // See https://developer.apple.com/documentation/appstoreserverapi/data_types
 
+// OfferType see https://developer.apple.com/documentation/appstoreserverapi/offertype
 type OfferType int
 
 const (
@@ -15,6 +16,7 @@ const (
 	OfferWithSubscriptionOfferCode OfferType = 3
 )
 
+// Environment see https://developer.apple.com/documentation/appstoreserverapi/environment
 type Environment string
 
 const (
@@ -22,6 +24,7 @@ const (
 	Production Environment = "Production"
 )
 
+// InAppOwnershipType see https://developer.apple.com/documentation/appstoreserverapi/inappownershiptype
 type InAppOwnershipType string
 
 const (
@@ -29,6 +32,7 @@ const (
 	Purchased    InAppOwnershipType = "PURCHASED"
 )
 
+// TransactionType see https://developer.apple.com/documentation/appstoreserverapi/type
 type TransactionType string
 
 const (
@@ -44,6 +48,7 @@ type JWSDecodedHeader struct {
 	X5c []string `json:"x5c,omitempty"`
 }
 
+// JWSTransaction see https://developer.apple.com/documentation/appstoreserverapi/jwstransaction
 type JWSTransaction struct {
 	Header    JWSDecodedHeader
 	Payload   JWSTransactionDecodedPayload
@@ -89,12 +94,14 @@ func (j *JWSTransactionDecodedPayload) GetSignedTime() time.Time {
 	return time.Unix(j.SignedDate/1e3, 0)
 }
 
+// JWSRenewalInfo see https://developer.apple.com/documentation/appstoreserverapi/jwsrenewalinfo
 type JWSRenewalInfo struct {
 	Header    JWSDecodedHeader
 	Payload   JWSRenewalInfoDecodedPayload
 	Signature string
 }
 
+// ExpirationIntent see https://developer.apple.com/documentation/appstoreserverapi/expirationintent
 type ExpirationIntent int
 
 const (
@@ -135,6 +142,7 @@ func (j *JWSRenewalInfoDecodedPayload) IsConsentedPriceIncrease() bool {
 	return j.PriceIncreaseStatus == 1
 }
 
+// TransactionInfoResponse see https://developer.apple.com/documentation/appstoreserverapi/transactioninforesponse
 type TransactionInfoResponse struct {
 	SignedTransactionInfo string `json:"signedTransactionInfo"`
 }
@@ -152,6 +160,7 @@ type SubscriptionGroupIdentifierItem struct {
 	LastTransactions            []LastTransactionsItem `json:"lastTransactions,omitempty"`
 }
 
+// SubscriptionStatus see https://developer.apple.com/documentation/appstoreserverapi/status
 type SubscriptionStatus int
 
 const (
