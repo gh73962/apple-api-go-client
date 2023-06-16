@@ -39,10 +39,10 @@ func (c *Claims) GetSubject() (string, error) {
 	return "", nil
 }
 
-func NewJWTHeader(kid string) map[string]interface{} {
+func NewJWTHeader(keyID string) map[string]interface{} {
 	return map[string]interface{}{
 		"alg": "ES256",
-		"kid": kid,
+		"kid": keyID,
 		"typ": "JWT",
 	}
 }
