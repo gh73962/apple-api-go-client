@@ -1,1 +1,1 @@
-package v1
+package appstoreapi
