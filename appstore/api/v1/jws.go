@@ -5,62 +5,62 @@ import (
 	"encoding/json"
 	"errors"
 	"strings"
+
+	"github.com/gh73962/appleapis/appstore/api/v1/datatypes"
 )
 
-func NewJWSTransaction(signedData string) (*JWSTransaction, error) {
-	array := strings.Split(signedData, ".")
-	if len(array) != 3 {
-		return nil, errors.New("invalid signedData")
-	}
-
-	headerData, err := base64.StdEncoding.DecodeString(array[0])
+func DecodeToJWSTransaction(data string) (*datatypes.JWSTransaction, error) {
+	header, payload, sig, err := decodeString(data)
 	if err != nil {
 		return nil, err
 	}
 
-	payloadData, err := base64.StdEncoding.DecodeString(array[1])
-	if err != nil {
+	t := datatypes.JWSTransaction{
+		Signature: sig,
+	}
+	if err = json.Unmarshal(header, &t.Header); err != nil {
 		return nil, err
 	}
-
-	var t JWSTransaction
-	if err := json.Unmarshal(headerData, &t.Header); err != nil {
+	if err = json.Unmarshal(payload, &t.Payload); err != nil {
 		return nil, err
 	}
-	if err := json.Unmarshal(payloadData, &t.Payload); err != nil {
-		return nil, err
-	}
-
-	t.Signature = array[2]
 
 	return &t, nil
 }
 
-func NewJWSRenewalInfo(signedData string) (*JWSRenewalInfo, error) {
-	array := strings.Split(signedData, ".")
-	if len(array) != 3 {
-		return nil, errors.New("invalid signedData")
-	}
-
-	headerData, err := base64.StdEncoding.DecodeString(array[0])
+func DecodeToJWSRenewalInfo(data string) (*datatypes.JWSRenewalInfo, error) {
+	header, payload, sig, err := decodeString(data)
 	if err != nil {
 		return nil, err
 	}
 
-	payloadData, err := base64.StdEncoding.DecodeString(array[1])
-	if err != nil {
+	t := datatypes.JWSRenewalInfo{
+		Signature: sig,
+	}
+	if err = json.Unmarshal(header, &t.Header); err != nil {
 		return nil, err
 	}
-
-	var t JWSRenewalInfo
-	if err := json.Unmarshal(headerData, &t.Header); err != nil {
+	if err = json.Unmarshal(payload, &t.Payload); err != nil {
 		return nil, err
 	}
-	if err := json.Unmarshal(payloadData, &t.Payload); err != nil {
-		return nil, err
-	}
-
-	t.Signature = array[2]
 
 	return &t, nil
+}
+
+func decodeString(data string) ([]byte, []byte, string, error) {
+	array := strings.Split(data, ".")
+	if len(array) != 3 {
+		return nil, nil, "", errors.New("invalid signed transaction data")
+	}
+
+	header, err := base64.StdEncoding.DecodeString(array[0])
+	if err != nil {
+		return nil, nil, "", err
+	}
+	payload, err := base64.StdEncoding.DecodeString(array[1])
+	if err != nil {
+		return nil, nil, "", err
+	}
+
+	return header, payload, array[1], nil
 }

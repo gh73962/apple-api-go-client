@@ -11,7 +11,7 @@ type Claims struct {
 	Issuer         string `json:"iss"`
 	IssuedAt       int64  `json:"iat"`
 	ExpirationTime int64  `json:"exp"`
-	Audience       string `json:"aud"`
+	Audience       string `json:"aud"` // Audience must appstoreconnect-v1
 	BundleID       string `json:"bid"`
 }
 

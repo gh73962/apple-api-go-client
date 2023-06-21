@@ -1,11 +1,16 @@
-package appstoreapi
+// Package datatypes See https://developer.apple.com/documentation/appstoreserverapi/data_types
+package datatypes
 
 import (
 	"encoding/json"
 	"time"
 )
 
-// See https://developer.apple.com/documentation/appstoreserverapi/data_types
+const (
+	basePath        = "https://api.storekit.itunes.apple.com/inApps/"
+	sandboxBasePath = "https://api.storekit-sandbox.itunes.apple.com/inApps/"
+	apiVersion      = "v1"
+)
 
 // OfferType see https://developer.apple.com/documentation/appstoreserverapi/offertype
 type OfferType int

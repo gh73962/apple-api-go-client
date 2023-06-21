@@ -1,4 +1,4 @@
-module github.com/gh73962/apple-api-go-client
+module github.com/gh73962/appleapis
 
 go 1.20
 
