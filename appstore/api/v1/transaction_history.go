@@ -8,9 +8,10 @@ import (
 	"github.com/gh73962/appleapis/appstore/api/v1/datatypes"
 )
 
-// RefundHistory see https://developer.apple.com/documentation/appstoreserverapi/get_refund_history
-func (s *Service) RefundHistory(ctx context.Context, bearer, transactionID, revision string) (*datatypes.OrderLookupResponse, error) {
-	req, err := http.NewRequest(http.MethodGet, s.BasePath+"lookup/"+transactionID+"?revision="+revision, nil)
+// TransactionHistory see https://developer.apple.com/documentation/appstoreserverapi/get_transaction_history
+// TODO Query Parameters
+func (s *Service) TransactionHistory(ctx context.Context, bearer, transactionID string) (*datatypes.HistoryResponse, error) {
+	req, err := http.NewRequest(http.MethodGet, s.BasePath+"history/"+transactionID, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -23,7 +24,7 @@ func (s *Service) RefundHistory(ctx context.Context, bearer, transactionID, revi
 	}
 	defer resp.Body.Close()
 
-	var rsp datatypes.OrderLookupResponse
+	var rsp datatypes.HistoryResponse
 	if err = json.NewDecoder(resp.Body).Decode(&rsp); err != nil {
 		return nil, err
 	}

@@ -22,7 +22,7 @@ func NewToken(keyID string, claims *Claims, pk *ecdsa.PrivateKey) (*jwtv5.Token,
 	return &t, bearer, nil
 }
 
-// GetPrivateKeyFromFilev load apple xxxx.p8 certificate
+// GetPrivateKeyFromFile load apple xxxx.p8 certificate
 func GetPrivateKeyFromFile(filename string) (*ecdsa.PrivateKey, error) {
 	bytes, err := os.ReadFile(filename)
 	if err != nil {

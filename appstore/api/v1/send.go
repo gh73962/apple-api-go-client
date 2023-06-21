@@ -1,4 +1,4 @@
-package httputils
+package appstoreapi
 
 import (
 	"context"
@@ -8,8 +8,17 @@ import (
 	"net/http"
 	"time"
 
+	"github.com/gh73962/appleapis/appstore/api/internal/httputils"
 	"github.com/gh73962/appleapis/appstore/api/v1/datatypes"
 )
+
+func (s *Service) Do(ctx context.Context, req *http.Request) (*http.Response, error) {
+	if s.NeedRetry {
+		return sendAndRetry(ctx, s.client, req, s.BackOff)
+	}
+
+	return send(ctx, s.client, req)
+}
 
 func SendRequest(ctx context.Context, client *http.Client, req *http.Request) (*http.Response, error) {
 	return send(ctx, client, req)
@@ -46,7 +55,7 @@ func sendAndRetry(ctx context.Context, client *http.Client, req *http.Request, b
 		client = http.DefaultClient
 	}
 	if bo == nil {
-		bo = NewBackoffImpl()
+		bo = httputils.NewBackoffImpl()
 	}
 
 	var (

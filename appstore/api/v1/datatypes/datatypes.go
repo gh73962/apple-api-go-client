@@ -7,9 +7,8 @@ import (
 )
 
 const (
-	basePath        = "https://api.storekit.itunes.apple.com/inApps/"
-	sandboxBasePath = "https://api.storekit-sandbox.itunes.apple.com/inApps/"
-	apiVersion      = "v1"
+	BasePath        = "https://api.storekit.itunes.apple.com/inApps/v1/"
+	SandboxBasePath = "https://api.storekit-sandbox.itunes.apple.com/inApps/v1/"
 )
 
 // OfferType see https://developer.apple.com/documentation/appstoreserverapi/offertype
@@ -223,4 +222,49 @@ func (e *ErrorResponse) Error() string {
 	}
 	data, _ := json.Marshal(e)
 	return string(data)
+}
+
+// ConsumptionRequest see https://developer.apple.com/documentation/appstoreserverapi/consumptionrequest
+type ConsumptionRequest struct {
+	AccountTenure            int    `json:"accountTenure,omitempty"`
+	AppAccountToken          string `json:"appAccountToken,omitempty"`
+	ConsumptionStatus        int    `json:"consumptionStatus,omitempty"`
+	CustomerConsented        bool   `json:"customerConsented,omitempty"`
+	DeliveryStatus           int    `json:"deliveryStatus,omitempty"`
+	LifetimeDollarsPurchased int    `json:"lifetimeDollarsPurchased,omitempty"`
+	Platform                 int    `json:"platform,omitempty"`
+	PlayTime                 int    `json:"playTime,omitempty"`
+	SampleContentProvided    bool   `json:"sampleContentProvided,omitempty"`
+	UserStatus               int    `json:"userStatus,omitempty"`
+}
+
+// NotificationHistoryRequest see https://developer.apple.com/documentation/appstoreserverapi/notificationhistoryrequest
+type NotificationHistoryRequest struct {
+	StartDate           int64  `json:"startDate,omitempty"`
+	EndDate             int64  `json:"endDate,omitempty"`
+	NotificationType    string `json:"notificationType,omitempty"`
+	NotificationSubtype string `json:"notificationSubtype,omitempty"`
+	OnlyFailures        bool   `json:"onlyFailures,omitempty"`
+	TransactionID       string `json:"transactionId,omitempty"`
+}
+
+// NotificationHistoryResponse see https://developer.apple.com/documentation/appstoreserverapi/notificationhistoryresponse
+type NotificationHistoryResponse struct {
+	NotificationHistory []NotificationHistoryResponseItem `json:"notificationHistory,omitempty"`
+	HasMore             bool                              `json:"hasMore,omitempty"`
+	PaginationToken     string                            `json:"paginationToken,omitempty"`
+}
+
+type NotificationHistoryResponseItem struct {
+	SendAttempts  []SendAttemptItem `json:"sendAttempts,omitempty"`
+	SignedPayload string            `json:"signedPayload,omitempty"`
+}
+
+type SendAttemptItem struct {
+	AttemptDate       int64  `json:"attemptDate,omitempty"`
+	SendAttemptResult string `json:"sendAttemptResult,omitempty"`
+}
+
+type SendTestNotificationResponse struct {
+	TestNotificationToken string `json:"testNotificationToken,omitempty"`
 }

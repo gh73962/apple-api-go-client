@@ -10,7 +10,7 @@ import (
 )
 
 func DecodeToJWSTransaction(data string) (*datatypes.JWSTransaction, error) {
-	header, payload, sig, err := decodeString(data)
+	header, payload, sig, err := DecodeSignedData(data)
 	if err != nil {
 		return nil, err
 	}
@@ -29,7 +29,7 @@ func DecodeToJWSTransaction(data string) (*datatypes.JWSTransaction, error) {
 }
 
 func DecodeToJWSRenewalInfo(data string) (*datatypes.JWSRenewalInfo, error) {
-	header, payload, sig, err := decodeString(data)
+	header, payload, sig, err := DecodeSignedData(data)
 	if err != nil {
 		return nil, err
 	}
@@ -47,7 +47,7 @@ func DecodeToJWSRenewalInfo(data string) (*datatypes.JWSRenewalInfo, error) {
 	return &t, nil
 }
 
-func decodeString(data string) ([]byte, []byte, string, error) {
+func DecodeSignedData(data string) ([]byte, []byte, string, error) {
 	array := strings.Split(data, ".")
 	if len(array) != 3 {
 		return nil, nil, "", errors.New("invalid signed transaction data")

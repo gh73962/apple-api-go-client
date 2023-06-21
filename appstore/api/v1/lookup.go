@@ -8,9 +8,9 @@ import (
 	"github.com/gh73962/appleapis/appstore/api/v1/datatypes"
 )
 
-// RefundHistory see https://developer.apple.com/documentation/appstoreserverapi/get_refund_history
-func (s *Service) RefundHistory(ctx context.Context, bearer, transactionID, revision string) (*datatypes.OrderLookupResponse, error) {
-	req, err := http.NewRequest(http.MethodGet, s.BasePath+"lookup/"+transactionID+"?revision="+revision, nil)
+// LookUpOrderID see https://developer.apple.com/documentation/appstoreserverapi/look_up_order_id
+func (s *Service) LookUpOrderID(ctx context.Context, bearer, orderID string) (*datatypes.OrderLookupResponse, error) {
+	req, err := http.NewRequest(http.MethodGet, s.BasePath+"lookup/"+orderID, nil)
 	if err != nil {
 		return nil, err
 	}
