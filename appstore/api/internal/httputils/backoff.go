@@ -5,11 +5,6 @@ import (
 	"time"
 )
 
-// Backoff see https://aws.amazon.com/cn/blogs/architecture/exponential-backoff-and-jitter/
-type Backoff interface {
-	Pause() time.Duration
-}
-
 type BackoffImpl struct {
 	Initial, Max, cur time.Duration
 }

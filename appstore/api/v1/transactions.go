@@ -32,7 +32,7 @@ func (s *Service) TransactionInfo(ctx context.Context, bearer, transactionID str
 	return DecodeToJWSTransaction(rsp.SignedTransactionInfo)
 }
 
-// SendConsumptionInformation SEE https://developer.apple.com/documentation/appstoreserverapi/send_consumption_information
+// SendConsumptionInformation see https://developer.apple.com/documentation/appstoreserverapi/send_consumption_information
 func (s *Service) SendConsumptionInformation(ctx context.Context, bearer, transactionID string, cr *datatypes.ConsumptionRequest) error {
 	var buff bytes.Buffer
 	if err := json.NewEncoder(&buff).Encode(cr); err != nil {
