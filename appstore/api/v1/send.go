@@ -35,6 +35,7 @@ func send(ctx context.Context, client *http.Client, req *http.Request) (*http.Re
 			err = ctx.Err()
 		default:
 		}
+		return resp, ctx.Err()
 	}
 	if resp.StatusCode != http.StatusOK {
 		errResp := datatypes.ErrorResponse{
