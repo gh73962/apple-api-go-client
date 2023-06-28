@@ -53,7 +53,7 @@ func DecodeSignedData(data string) ([]byte, []byte, string, error) {
 		return nil, nil, "", errors.New("invalid signed transaction data")
 	}
 
-	header, err := base64.StdEncoding.DecodeString(array[0])
+	header, err := base64.RawStdEncoding.DecodeString(array[0])
 	if err != nil {
 		return nil, nil, "", err
 	}
