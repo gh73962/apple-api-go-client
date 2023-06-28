@@ -62,5 +62,5 @@ func DecodeSignedData(data string) ([]byte, []byte, string, error) {
 		return nil, nil, "", err
 	}
 
-	return header, payload, array[1], nil
+	return header, payload, array[2], nil
 }
