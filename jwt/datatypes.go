@@ -28,7 +28,7 @@ func (c *Claims) GetIssuer() (string, error) {
 }
 
 func (c *Claims) GetAudience() (jwtv5.ClaimStrings, error) {
-	return []string{"appstoreconnect-v1"}, nil
+	return []string{c.Audience}, nil
 }
 
 func (c *Claims) GetNotBefore() (*jwtv5.NumericDate, error) {
@@ -37,6 +37,17 @@ func (c *Claims) GetNotBefore() (*jwtv5.NumericDate, error) {
 
 func (c *Claims) GetSubject() (string, error) {
 	return "", nil
+}
+
+func NewClaims(iss, bid string) *Claims {
+	t := time.Now()
+	return &Claims{
+		Issuer:         iss,
+		IssuedAt:       t.Unix(),
+		ExpirationTime: t.Add(30 * time.Minute).Unix(),
+		Audience:       "appstoreconnect-v1",
+		BundleID:       bid,
+	}
 }
 
 func NewJWTHeader(keyID string) map[string]interface{} {
