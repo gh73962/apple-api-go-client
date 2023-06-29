@@ -57,7 +57,7 @@ func DecodeSignedData(data string) ([]byte, []byte, string, error) {
 	if err != nil {
 		return nil, nil, "", err
 	}
-	payload, err := base64.StdEncoding.DecodeString(array[1])
+	payload, err := base64.RawStdEncoding.DecodeString(array[1])
 	if err != nil {
 		return nil, nil, "", err
 	}
