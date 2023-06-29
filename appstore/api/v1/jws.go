@@ -50,7 +50,7 @@ func DecodeToJWSRenewalInfo(data string) (*datatypes.JWSRenewalInfo, error) {
 func DecodeSignedData(data string) ([]byte, []byte, string, error) {
 	array := strings.Split(data, ".")
 	if len(array) != 3 {
-		return nil, nil, "", errors.New("invalid signed transaction data")
+		return nil, nil, "", errors.New("invalid signed data")
 	}
 
 	header, err := base64.RawStdEncoding.DecodeString(array[0])
