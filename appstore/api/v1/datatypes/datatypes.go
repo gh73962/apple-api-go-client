@@ -75,7 +75,7 @@ type JWSTransactionDecodedPayload struct {
 	PurchaseDate                int64              `json:"purchaseDate,omitempty"`
 	Quantity                    int                `json:"quantity,omitempty"`
 	RevocationDate              int64              `json:"revocationDate,omitempty"`
-	RevocationReason            string             `json:"revocationReason,omitempty"`
+	RevocationReason            int                `json:"revocationReason,omitempty"`
 	SignedDate                  int64              `json:"signedDate,omitempty"`
 	Storefront                  string             `json:"storefront,omitempty"`
 	StorefrontID                string             `json:"storefrontId,omitempty"`
