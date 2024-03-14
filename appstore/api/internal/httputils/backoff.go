@@ -19,5 +19,5 @@ func (b *BackoffImpl) Pause() time.Duration {
 }
 
 func NewBackoffImpl() *BackoffImpl {
-	return &BackoffImpl{Initial: 100 * time.Millisecond}
+	return &BackoffImpl{Initial: 100 * time.Millisecond, cur: 100 * time.Millisecond}
 }
