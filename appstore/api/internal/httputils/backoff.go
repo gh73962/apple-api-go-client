@@ -10,14 +10,17 @@ type BackoffImpl struct {
 }
 
 func (b *BackoffImpl) Pause() time.Duration {
-	d := time.Duration(1 + rand.Int63n(int64(b.cur)))
-	b.cur = time.Duration(float64(b.cur) * 2)
+	if b.cur == 0 {
+		b.cur = b.Initial
+	}
+	interval := time.Duration(1 + rand.Int63n(int64(b.cur)))
+	b.cur = time.Duration(b.cur * 2)
 	if b.cur > b.Max {
 		b.cur = b.Max
 	}
-	return d
+	return interval
 }
 
 func NewBackoffImpl() *BackoffImpl {
-	return &BackoffImpl{Initial: 100 * time.Millisecond, cur: 100 * time.Millisecond}
+	return &BackoffImpl{Initial: 100 * time.Millisecond}
 }
